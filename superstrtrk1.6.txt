@@ -1,0 +1,668 @@
+1 rem SUPER STR TRK by EGAMERCREATIONS
+1 rem ================================
+
+1 rem WARNING: Guides below may not be accurate
+
+1 rem 10 - 97 = Setup
+1 rem 100 - 119 = Introduction
+1 rem 120 - 280 = Command Interface
+1 rem 200 - 978 = Help
+1 rem 1000 - 1940 = Short Range Sensors
+1 rem 2000 - 2010 = Long Range Sensors
+1 rem 3000 - 3070 = Phasers
+1 rem 4000 - 4440 = Navigate
+1 rem 5000 - 5099 = Docking
+1 rem 6000 - 6240 = Shields
+1 rem 7000 - 7040 = Stats
+1 rem 10000 - 11000 = Generate Sectors
+1 rem 20000 - 21180 = Calculate Phasers
+1 rem 30000 - 30220 = Calculate and Display Loss
+1 rem 40000 - 40130 = Calculate and Display Win
+
+
+
+
+
+
+
+
+
+
+1 rem START PAGE
+1 normal
+2 home
+3 print "SUPER STR TRK BETA-5"
+4 print "BY EGAMERCREATIONS
+5 print "====================" : print ""
+6 print "PRESS ANY KEY TO PLAY
+9 get gi$
+10 print ""
+15 let di = 0
+20 print "Enter Difficulty (Type HELP for a list  of difficulties)"
+30 input gi$
+40 if gi$ = "EASY" then let di = 1
+50 if gi$ = "MEDIUM" then let di = 2
+60 if gi$ = "HARD" then let di = 3
+65 if gi$ = "INSANE" then let di = 4
+70 if gi$ = "HELP" then goto 90
+80 if di = 0 then print "" : print "?" : print "" : goto 20
+85 if di <> 0 then gosub 10000 : gosub 60000
+86 if di <> 0 then goto 100
+
+90 rem DIFFICULTY HELP
+90 print ""
+95 print "There are four difficulty levels; Easy, Medium, Hard, and Insane."
+96 print ""
+97 goto 20
+
+100 rem PLAYER INIT PHASE
+100 print ""
+101 rem print "Enter Generation Seed"
+102 rem input se
+104 rem print ""
+105 print "What is your name?"
+110 input na$
+111 if na$ = "" then let na$ = "Kirk"
+112 if na$ = "ADMINSETUP" then gosub 70000
+113 print "" : print "What is your ship's name?"
+114 input sn$
+115 if sn$ = "" then let sn$ = "Enterprise"
+119 home
+120 flash
+121 print "MESSAGE FROM STARFLEET COMMAND"
+125 normal
+126 print "" : print "A large Klingon fleet has been seen in  the galaxy. They seem to want war."
+128 print "";na$;", it is your duty to stop them." : print "It is currently stardate 5134. You have until stardate ";(5134+md);", which gives you ";md;" stardates." : print "You may take control of the ship ";sn$;" for this mission." : print "Good Luck."
+130 get gi$
+140 home
+150 print "You can use HELP to view possible comma-nds and how to use them"
+199 goto 200
+
+200 rem MAIN COMMAND INTERFACE
+200 print "Command, Captain?"
+205 if en < 10 then goto 55000
+210 input co$
+220 if co$ = "SRS" or co$ = "SSENSORS" then goto 1000
+230 if co$ = "LRS" or co$ = "LSENSORS" then goto 2000
+240 if co$ = "PHA" or co$ = "PHASERS" then goto 3000
+250 if co$ = "NAV" or co$ = "WARP" then goto 4000
+255 if co$ = "DOK" or co$ = "DOCK" then goto 5000
+256 if co$ = "SHE" or co$ = "SHIELDS" then goto 6000
+257 if co$ = "STAT" or co$ = "STATS" then goto 7000
+258 if co$ = "DAM" or co$ = "DAMAGE" then goto 8000
+260 if co$ = "HELP" or co$ = "?" then goto 350
+270 print "Pardon, Captain?"
+275 print ""
+280 goto 200
+
+350 rem HELP PAGE
+350 print "" : print "There are 8 commands you can use:"
+360 print "NAV: Moves your starship."
+370 print "SRS: Shows your immediate surroundings."
+380 print "LRS: Shows your surroundings.
+390 print "PHA: Shoot enemy ships."
+395 print "DOK: Dock your ship at a starbase."
+396 print "SHE: Assign and remove energy from your  shields."
+397 print "STAT: Show your ship's stats."
+398 print "DAM: Show's the state of your ship's    systems."
+400 print "Would you like a more detailed
+410 print "description of a command? (Y/N)"
+420 get gi$
+430 if gi$ <> "Y" then print "" : goto 200
+440 print "What command do you need help on?"
+450 input gi$
+460 if gi$ = "NAV" then gosub 500
+470 if gi$ = "SRS" then gosub 600
+475 if gi$ = "LRS" then gosub 700
+480 if gi$ = "PHA" then gosub 800
+484 if gi$ = "DOK" then gosub 900
+485 if gi$ = "SHE" then gosub 950
+486 if gi$ = "DAM" then gosub 980
+487 print "" : goto 200
+
+
+500 rem DETAILED HELP PAGE
+500 print ""
+510 print "NAV stands for Navigate."
+520 print "The first input, Course, controls"
+530 print "what direction you go. 1 is right,"
+540 print "2 is up, 3 is left and 4 is down."
+550 print "The next input, Warp, is how far
+560 print "you want to go. 1 is one sector,"
+570 print "2 is two sectors, etc."
+580 print "Press any key to continue."
+590 get gi$
+595 return
+
+600 print ""
+605 print "SRS stands for Short Range Sensors."
+610 print "This shows your sector."
+620 print "E is you, K is a Klingon, * is
+630 print "empty space and ! is a starbase.
+640 print "Press any key to continue."
+650 get gi$
+660 return
+
+700 print ""
+710 print "LRS stands for Long Range Sensors."
+720 print "It shows each sector as a number."
+730 print "The tens place is the number of
+740 print "Klingons in that sector, and"
+750 print "the ones place is the amount of
+760 print "starbases in that sector."
+770 print "Press any key to continue."
+780 get gi$
+790 return
+
+800 print ""
+805 print "PHA stands for Phasers."
+820 print "The input, Power, is how
+830 print "much power you want to put into
+835 print "the blast. Higher power levels
+840 print "do more damage, but bare in mind
+845 print "that the power is taken from
+850 print "your ship's total energy."
+860 print "Press any key to continue."
+870 get gi$
+880 return
+
+900 print ""
+905 print "DOK stands for Dock Ship."
+910 print "You can use this command to dock
+920 print "your ship at a starbase. This command
+930 print "can only be used if your sector"
+940 print "has a starbase and no Klingons.
+945 print "Press any key to continue."
+946 get gi$
+947 return
+
+950 print ""
+955 print "SHE stands for Shields."
+960 print "Input a number to assign energy to the
+965 print "shields. (Positive numbers add energy
+970 print "to the shields, negative numbers
+975 print "remove energy.)"
+976 print "Press any key to continue."
+977 get gi$
+978 return
+
+980 print "" : print "DAM stands for Damage Control." : print "This shows the state of your ship's" : print "systems." : print "Press any key to continue." 
+982 get gi$
+983 return
+
+
+1000 rem SYSTEM - SHORT RANGE SENSORS
+1000 if sw = 0 then print "SRS Inoperable!" : goto 200
+1005 if es = 1 then gosub 1100
+1010 if es = 2 then gosub 1200
+1020 if es = 3 then gosub 1300
+1030 if es = 4 then gosub 1400
+1040 if es = 5 then gosub 1500
+1050 if es = 6 then gosub 1600
+1060 if es = 7 then gosub 1700
+1070 if es = 8 then gosub 1800
+1080 if es = 9 then gosub 1900
+1085 print "/12345"
+1086 print "1";p1$;"
+1087 print "2";p2$;"
+1088 print "3";p3$;"
+1089 print "4";p4$;"
+1090 print "5";p5$;"
+1095 goto 200
+
+1100 if s1 = 11 then let p1$ = "K****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1110 if s1 = 10 then let p1$ = "K****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1120 if s1 = 01 then let p1$ = "*****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1130 if s1 = 0 then let p1$ = "*****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1140 return
+
+1200 if s2 = 11 then let p1$ = "K****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1210 if s2 = 10 then let p1$ = "K****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1220 if s2 = 01 then let p1$ = "*****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1230 if s2 = 0 then let p1$ = "*****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1240 return
+
+1300 if s3 = 11 then let p1$ = "K****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1310 if s3 = 10 then let p1$ = "K****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1320 if s3 = 01 then let p1$ = "*****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1330 if s3 = 0 then let p1$ = "*****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1340 return
+
+1400 if s4 = 11 then let p1$ = "K****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1410 if s4 = 10 then let p1$ = "K****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1420 if s4 = 01 then let p1$ = "*****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1430 if s4 = 0 then let p1$ = "*****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1440 return
+
+1500 if s5 = 11 then let p1$ = "K****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1510 if s5 = 10 then let p1$ = "K****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1520 if s5 = 01 then let p1$ = "*****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1530 if s5 = 0 then let p1$ = "*****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1540 return
+
+1600 if s6 = 11 then let p1$ = "K****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1610 if s6 = 10 then let p1$ = "K****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1620 if s6 = 01 then let p1$ = "*****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1630 if s6 = 0 then let p1$ = "*****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1640 return
+
+1700 if s7 = 11 then let p1$ = "K****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1710 if s7 = 10 then let p1$ = "K****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1720 if s7 = 01 then let p1$ = "*****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1730 if s7 = 0 then let p1$ = "*****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1740 return
+
+1800 if s8 = 11 then let p1$ = "K****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1810 if s8 = 10 then let p1$ = "K****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1820 if s8 = 01 then let p1$ = "*****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1830 if s8 = 0 then let p1$ = "*****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1840 return
+
+1900 if s9 = 11 then let p1$ = "K****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1910 if s9 = 10 then let p1$ = "K****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1920 if s9 = 01 then let p1$ = "*****" : let p2$ = "***!*" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1930 if s9 = 0 then let p1$ = "*****" : let p2$ = "*****" : let p3$ = "*****" : let p4$ = "*****" : let p5$ = "****E"
+1940 return
+
+
+2000 rem SYSTEM - LONG RANGE SENSORS
+2000 if lw <> 1 then print "LRS Inoperable!" : goto 200
+2001 print "  A  B  C" : print " /--------"
+2002 print "1|";
+2004 if s1 = 1 then print "01";
+2005 if s1 = 0 then print "00";
+2010 if s1 = 11 or s1 = 10 then print s1;
+2015 print "|";
+2020 if s2 = 1 then print "01";
+2025 if s2 = 0 then print "00";
+2030 if s2 = 11 or s2 = 10 then print s2;
+2035 print "|";
+2040 if s3 = 1 then print "01"
+2045 if s3 = 0 then print "00"
+2050 if s3 = 11 or s3 = 10 then print s3
+2051 print "2|";
+2055 if s4 = 1 then print "01";
+2060 if s4 = 0 then print "00";
+2065 if s4 = 11 or s4 = 10 then print s4;
+2070 print "|";
+2075 if s5 = 1 then print "01";
+2080 if s5 = 0 then print "00";
+2085 if s5 = 11 or s5 = 10 then print s5;
+2090 print "|";
+2100 if s6 = 1 then print "01"
+2110 if s6 = 0 then print "00"
+2115 if s6 = 11 or s6 = 10 then print s6
+2117 print "3|";
+2120 if s7 = 1 then print "01";
+2125 if s7 = 0 then print "00";
+2130 if s7 = 11 or s7 = 10 then print s7;
+2135 print "|";
+2140 if s8 = 1 then print "01";
+2145 if s8 = 0 then print "00";
+2150 if s8 = 11 or s8 = 10 then print s8;
+2155 print "|";
+2160 if s9 = 1 then print "01"
+2165 if s9 = 0 then print "00"
+2170 if s9 = 11 or s9 = 10 then print s9
+2200 print "" : print "You are at sector ";
+2210 if int(es) = 1 then print "A-1"
+2220 if int(es) = 2 then print "B-2"
+2230 if int(es) = 3 then print "C-1"
+2240 if int(es) = 4 then print "A-2"
+2250 if int(es) = 5 then print "B-2"
+2260 if int(es) = 6 then print "C-2"
+2270 if int(es) = 7 then print "A-3"
+2280 if int(es) = 8 then print "B-3"
+2290 if int(es) = 9 then print "C-3"
+2900 goto 200
+
+
+3000 rem SYSTEM - PHASERS
+3000 print "How much energy, Captain?"
+3010 input ph
+3015 if ph >= en then print "We don't have enough energy for that,   Captain!" : goto 200
+3016 let cs = 0
+3020 if es = 1 and s1 >= 10 then let cs = 1
+3025 if es = 2 and s2 >= 10 then let cs = 1
+3030 if es = 3 and s3 >= 10 then let cs = 1
+3035 if es = 4 and s4 >= 10 then let cs = 1
+3040 if es = 5 and s5 >= 10 then let cs = 1
+3045 if es = 6 and s6 >= 10 then let cs = 1
+3050 if es = 7 and s7 >= 10 then let cs = 1
+3055 if es = 8 and s8 >= 10 then let cs = 1
+3060 if es = 9 and s9 >= 10 then let cs = 1
+3065 if cs = 0 then print "There are no Klingons, Captain!" : goto 200
+3070 gosub 20000
+
+
+4000 rem SYSTEM - NAVIGATE
+4000 print "Course:"
+4010 input cs
+4020 if cs > 4 or cs < 1 then print "Invalid Course" : print "" : goto 200
+4030 print "Warp Factor:"
+4040 input wa
+4050 if wa > mw or wa < 1 then print "Invalid Warp" : print "" : goto 200
+4055 if (wa*mp) >= en then print "We don't have enough energy for that, Captain!" : goto 200
+4056 let en = (en - (wa*mp))
+4058 let kh = mk
+4060 if cs = 1 then gosub 4100
+4070 if cs = 2 then gosub 4200
+4080 if cs = 3 then gosub 4300
+4090 if cs = 4 then gosub 4400
+4092 for i = 1 to wa
+4093 gosub 50000
+4094 next
+4095 goto 200
+
+
+4100 for i = 1 to wa
+4110 let es = (es + 1)
+4120 if es > 9 then print "You can't go off the map!" : let es = 9 : return
+4130 next
+4140 return
+
+4200 for i = 1 to wa
+4210 let es = (es - 3)
+4220 if es < 1 then print "You can't go off the map!" : let es = 1 : return
+4230 next
+4240 return
+
+4300 for i = 1 to wa
+4310 let es = (es - 1)
+4320 if es < 1 then print "You can't go off the map!" : let es = 1 : return
+4330 next
+4340 return
+
+4400 for i = 1 to wa
+4410 let es = (es + 3)
+4420 if es > 9 then print "You can't go off the map!" : let es = 9 : return
+4430 next
+4440 return
+
+
+5000 rem SYSTEM - DOCK
+5000 let cd = 0
+5005 if es = 1 and s1 = 01 then let cd = 1
+5010 if es = 2 and s2 = 01 then let cd = 1
+5020 if es = 3 and s3 = 01 then let cd = 1
+5030 if es = 4 and s4 = 01 then let cd = 1
+5040 if es = 5 and s5 = 01 then let cd = 1
+5050 if es = 6 and s6 = 01 then let cd = 1
+5060 if es = 7 and s7 = 01 then let cd = 1
+5070 if es = 8 and s8 = 01 then let cd = 1
+5080 if es = 9 and s9 = 01 then let cd = 1
+5085 if zc < dc then print "You must wait "; (dc - zc) + 1 ;" stardate(s) to dock again!" : goto 200
+5090 if cd <> 1 then print "You can't dock in this sector, Captain!" : goto 200
+5095 if cd = 1 and sw = 1 then print "/12345" : print "1*****" : print "2**E!*" : print "3*****" : print "4*****" : print "5*****"
+5096 print "Docking Ship..."
+5097 if cd = 1 then for i = 1 to 5000
+5098 if cd = 1 then next
+5099 if cd = 1 then print "Ship Docked" : print "Don't forget to redo shields" : let en = me : let sh = 0 : let so = (so+100) : let sw = 1 : let lw = 1 : let mw = 3 : let zc = 0 : gosub 50000
+5100 goto 200
+
+
+6000 rem SYSTEM - SHIELDS
+6000 print "How much do you want to add to the"
+6005 print "shields?"
+6010 input gn
+6020 if gn > 0 then goto 6100
+6030 if gn < 0 then goto 6200
+6040 goto 200
+
+6100 if en <= gn then print "We don't have that much energy, Captain!" : goto 200
+6110 let en = (en - gn)
+6120 let sh = (sh + gn)
+6130 print gn;" energy added to shields."
+6135 let zs = sh
+6140 goto 200
+
+6200 if sh < gn then print "We don't have that much energy, Captain!" : goto 200
+6210 let en = (en + gn)
+6220 let sh = (sh - gn)
+6230 print gn;" energy taken from shields."
+6235 let zs = sh
+6240 goto 200
+
+
+7000 rem SYSTEM - STATS
+7000 print ""
+7010 print sn$;" Stats:"
+7015 print "Health:";int(eh);"
+7018 print "Energy:";int(en);"
+7020 print "Shields:";int(sh);"
+7026 if lw = 0 then print "Sector: [LRS Unoperable]"
+7030 print "Klingons Destroyed:";int(kd);"
+7035 print "Klingons Left:";(kn-kd);"
+7038 print "Stardates left:";int(sd);"/";md;"
+7040 print "You are at sector ";
+7110 if lw = 1 then if int(es) = 1 then print "A-1"
+7120 if lw = 1 then if int(es) = 2 then print "B-2"
+7130 if lw = 1 then if int(es) = 3 then print "C-1"
+7140 if lw = 1 then if int(es) = 4 then print "A-2"
+7150 if lw = 1 then if int(es) = 5 then print "B-2"
+7160 if lw = 1 then if int(es) = 6 then print "C-2"
+7170 if lw = 1 then if int(es) = 7 then print "A-3"
+7180 if lw = 1 then if int(es) = 8 then print "B-3"
+7190 if lw = 1 then if int(es) = 9 then print "C-3"
+7900 goto 200
+
+
+8000 rem SYSTEM - DAMAGE
+8000 print ""
+8010 if sw = 1 then print "SHORT RANGE SENSORS: online"
+8020 if sw = 0 then print "SHORT RANGE SENSORS: offline"
+8030 if lw = 1 then print "LONG RANGE SENSORS: online"
+8040 if lw = 0 then print "LONG RANGE SENSORS: offline"
+8050 if mw = 3 then print "WARP ENGINES: prime"
+8060 if mw = 1 then print "WARP ENGINES: damaged"
+8070 if zs = sh then print "SHIELDS: prime"
+8080 if zs <> sh then print "SHIELDS: damaged"
+8090 goto 200
+
+
+10000 rem SETUP and INITIALIZATION SUBROUTINE
+10000 if di = 1 then let kn = 5 : let en = 5000 : let st = 3 : let me = 5000 : let eh = 1800 : let mh = 1800 : let mk = 200 : let dk = 2 : let mp = 20 : let sd = 40 : let md = 40 : let sr = 0.5 : let dc = 2 : let zc = 2
+10010 if di = 2 then let kn = 6 : let en = 4000 : let st = 2 : let me = 4000 : let eh = 1600 : let mh = 1600 : let mk = 250 : let dk = 1.8 : let mp = 30 : let sd = 30 : let md = 30 : let sr = 0.6 : let dc = 2 : let zc = 2
+10020 if di = 3 then let kn = 7 : let en = 3000 : let st = 1 : let me = 3000 : let eh = 1400 : let mh = 1400 : let mk = 300 : let dk = 1.5 : let mp = 40 : let sd = 20 : let md = 20 : let sr = 0.7 : let dc = 3 : let zc = 3
+10021 if di = 4 then let kn = 8 : let en = 2200 : let st = 0.5 : let me = 2000 : let eh = 1200 : let mh = 1200 : let mk = 350 : let dk = 1.2 : let mp = 50 : let sd = 15 : let md = 15 : let sr = 0.8 : let dc = 4 : let zc = 4
+10022 let kd = 0
+10023 let so = 0
+10024 let kh = mk
+10025 let gk = kn
+10026 let gs = se
+10027 let gt = st
+10028 let tp = 0
+10029 let op = 0
+10030 if gk > 0 and gs = 0 then let gs = se : let gk = (gk-1) : let tp = 1
+10040 if gt > 0 and gs = 0 then let gs = se : let gt = (gt-1) : let op = 1
+10050 let s1 = ((tp*10)+op)
+10060 let gs = gs / 2
+10064 let tp = 0
+10065 let op = 0
+10070 if gk > 0 and gs = 0 then let gs = se : let gk = (gk-1) : let tp = 1
+10080 if gt > 0 and gs = 0 then let gs = se : let gt = (gt-1) : let op = 1
+10090 let s2 = ((tp*10)+op)
+10095 let gs = gs / 2 
+10100 let tp = 0 
+10105 let op = 0
+10110 if gk > 0 and gs = 0 then let gs = se : let gk = (gk-1) : let tp = 1
+10120 if gt > 0 and gs = 0 then let gs = se : let gt = (gt-1) : let op = 1
+10130 let s3 = ((tp*10)+op)
+10135 let gs = gs / 2
+10140 let tp = 0
+10145 let op = 0
+10150 if gk > 0 and gs = 0 then let gs = se : let gk = (gk-1) : let tp = 1
+10160 if gt > 0 and gs = 0 then let gs = se : let gt = (gt-1) : let op = 1
+10170 let s4 = ((tp*10)+op)
+10180 let gs = gs / 2
+10190 let tp = 0
+10200 let op = 0
+10210 if gk > 0 and gs = 0 then let gs = se : let gk = (gk-1) : let tp = 1
+10220 if gt > 0 and gs = 0 then let gs = se : let gt = (gt-1) : let op = 1
+10230 let s5 = ((tp*10)+op)
+10240 let gs = gs / 2
+10250 let tp = 0
+10260 let op = 0
+10270 if gk > 0 and gs = 0 then let gs = se : let gk = (gk-1) : let tp = 1
+10280 if gt > 0 and gs = 0 then let gs = se : let gt = (gt-1) : let op = 1
+10290 let s6 = ((tp*10)+op)
+10300 let gs = gs / 2
+10310 let tp = 0
+10320 let op = 0
+10330 if gk > 0 and gs = 0 then let gs = se : let gk = (gk-1) : let tp = 1
+10340 if gt > 0 and gs = 0 then let gs = se : let gt = (gt-1) : let op = 1
+10350 let s7 = ((tp*10)+op)
+10360 let gs = gs / 2
+10370 let tp = 0
+10380 let op = 0
+10390 if gk > 0 and gs = 0 then let gs = se : let gk = (gk-1) : let tp = 1
+10400 if gt > 0 and gs = 0 then let gs = se : let gt = (gt-1) : let op = 1
+10410 let s8 = ((tp*10)+op)
+10420 let gs = gs / 2
+10430 let tp = 0
+10440 let op = 0
+10450 if gk > 0 and gs = 0 then let gs = se : let gk = (gk-1) : let tp = 1
+10460 if gt > 0 and gs = 0 then let gs = se : let gt = (gt-1) : let op = 1
+10470 let s9 = ((tp*10)+op)
+10480 let gs = gs / 2
+10490 let tp = 0
+10500 let op = 0
+10510 if s1 = 0 then let s1 = 00
+10520 if s2 = 0 then let s2 = 00
+10530 if s3 = 0 then let s3 = 00
+10540 if s4 = 0 then let s4 = 00
+10550 if s5 = 0 then let s5 = 00
+10560 if s6 = 0 then let s6 = 00
+10570 if s7 = 0 then let s7 = 00
+10580 if s8 = 0 then let s8 = 00
+10590 if s9 = 0 then let s9 = 00
+10600 let ex = 5
+10610 let ey = 5
+10620 let es = 9
+10630 let ds = eh : let dl = eh : let dw = eh
+11000 return
+
+20000 rem KLINGON DAMAGE SUBROUTINE
+20000 let en = (en - ph)
+20010 let kh = (kh - (ph / 1.5))
+20020 if kh <= 0 then print "We got'em, Captain!" : let so = (so + 200) : let kd = (kd + 1) : goto 20070
+20025 if kd = kn then goto 40000
+20030 if kh > 0 then print abs(int((ph/1.5)));" hit on Klingon"
+20040 if kh > 0 then let eh = (eh - abs((kh/dk)-(sh/2)))
+20050 print abs(int((kh/dk)-(sh/2)));" hit on ";sn$;" (";abs(int(eh));" health remaining)"
+20054 let sh = ((sh-(kh/dk)))
+20055 if sh <= 0 then print "WARNING: Shields disabled" : let sh = 0
+20056 gosub 60000
+20060 goto 30000
+20070 if es = 1 then if s1 >= 10 then let s1 = (s1 - 10)
+20080 if es = 2 then if s2 >= 10 then let s2 = (s2 - 10)
+20090 if es = 3 then if s3 >= 10 then let s3 = (s3 - 10)
+20100 if es = 4 then if s4 >= 10 then let s4 = (s4 - 10)
+20110 if es = 5 then if s5 >= 10 then let s5 = (s5 - 10)
+21120 if es = 6 then if s6 >= 10 then let s6 = (s6 - 10)
+21130 if es = 7 then if s7 >= 10 then let s7 = (s7 - 10)
+21140 if es = 8 then if s8 >= 10 then let s8 = (s8 - 10)
+21150 if es = 9 then if s9 >= 10 then let s9 = (s9 - 10)
+21160 if kd = kn then goto 40000
+21180 print "" : goto 200
+
+30000 rem LOSE SUBROUTINE - DESTROYED
+30000 if eh > 0 then goto 21160
+30010 for i = 1 to 4000
+30020 next
+30060 home
+30080 for i = 1 to 4000
+30090 next
+30100 print "The Klingons got you!"
+30110 print ""
+30120 print "Klingons Destroyed:";kd;"/";kn;"
+30130 print "Total Score:";so;
+30135 print ""
+30140 print "However, you managed to escape in a"
+30150 print "shuttlecraft..."
+30160 for i = 1 to 4000
+30170 next
+30180 print ""
+30190 print "WOULD YOU LIKE TO PLAY AGAIN?"
+30200 get gi$
+30210 if gi$ = "Y" then goto 1
+30220 if gi$ <> "Y" then home : end
+
+40000 rem WIN SUBROUTINE
+40000 home
+40010 for i = 1 to 2000
+40020 next
+40030 print "You Win!"
+40040 print ""
+40050 print "You destroyed all the Klingons!"
+40060 print "You had ";int(eh);" health left."
+40070 print "Your final score was ";so;"."
+40080 print "But wait... is that another Klingon"
+40090 print "fleet?..."
+40100 print "" : print "WOULD YOU LIKE TO PLAY AGAIN?"
+40110 get gi$
+40120 if gi$ = "Y" then goto 1
+40130 if gi$ <> "Y" then home : end
+
+50000 rem LOSE SUBROUTINE - TIME
+50000 let sd = (sd - sr)
+50005 if zc < dc then let zc = zc + 1
+50010 if sd > 0 then return
+50020 for i = 1 to 4000
+50030 next
+50040 home
+50050 for i = 1 to 4000
+50060 next
+50070 print "You ran out of time!"
+50075 print ""
+50080 print "Klingons Destroyed:";kd;"/";kn;"
+50090 print "Total Score:";so;"
+50100 print "" : print "WOULD YOU LIKE TO PLAY AGAIN?"
+50110 get gi$
+50120 if gi$ = "Y" then goto 1
+50130 if gi$ <> "Y" then home : end
+
+55000 rem LOSE SUBROUTINE - ENERGY
+55020 for i = 1 to 4000
+55030 next
+55040 home
+55050 for i = 1 to 4000
+55060 next
+55070 print "You ran out of energy!"
+55075 print ""
+55080 print "Klingons Destroyed:";kd;"/";kn;"
+55090 print "Total Score:";so;"
+55100 print "" : print "WOULD YOU LIKE TO PLAY AGAIN?"
+55110 get gi$
+55120 if gi$ = "Y" then goto 1
+55130 if gi$ <> "Y" then home : end
+
+
+60000 rem DAMAGE CONTROL SUBROUTINE
+60000 let ds = eh : let dl = eh : let dw = eh
+60010 if ds < (mh / 1.3) then let sw = 0 : print "Short Range Sensors Damaged"
+60020 if ds > (mh / 1.3) then let sw = 1
+60030 if dl < (mh / 1.4) then let lw = 0 : print "Long Range Sensors Damaged"
+60040 if dl > (mh / 1.4) then let lw = 1
+60050 if dw < (mh / 1.45) then let mw = 1 : print "Warp Engines Damaged"
+60060 if dw > (mh / 1.45) then let mw = 3
+60070 return
+
+
+70000 rem ADMIN SETUP SUBROUTINE
+70000 print "Admin Setup:"
+70020 print "Starting Energy:";
+70025 input en
+70030 print "Starting Health:";
+70035 input eh
+70040 print "Starting Sector:";
+70045 input es
+70050 print "Starting Shields:";
+70055 input sh
+70060 print "Stardates:";
+70065 input md : let sd = md
+70070 print "Max Warp (will get overridden when visi-ting docks):";
+70075 input mw
+70080 print "" : print "What is your name?"
+70085 input na$
+72000 return
