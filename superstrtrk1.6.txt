@@ -1,7 +1,7 @@
 1 rem SUPER STR TRK by EGAMERCREATIONS
 1 rem ================================
 
-1 rem WARNING: Guides below may not be accurate
+1 rem WARNING: Guides below are probably not accurate cause im too lazy to do them
 
 1 rem 10 - 97 = Setup
 1 rem 100 - 119 = Introduction
